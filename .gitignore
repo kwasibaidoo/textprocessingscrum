@@ -1,0 +1,24 @@
+# JavaFX specific files
+*.class
+*.jar
+*.war
+*.ear
+*.jmod
+
+# JavaFX build directories
+/build/
+/out/
+/target/
+
+# JavaFX IDE specific files
+/.idea/
+/*.iml
+/.project
+/.classpath
+/.settings/
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
