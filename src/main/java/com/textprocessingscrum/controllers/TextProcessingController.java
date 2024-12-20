@@ -73,6 +73,12 @@ public class TextProcessingController {
     private TextFlow searchResult;
 
     @FXML
+    private Button export_button;
+
+    @FXML
+    private Button import_button;
+
+    @FXML
     void addToCollection(MouseEvent event) {
         ValidationResult textVal = Validator.validate(text.getText(), "not_null");
 
@@ -219,7 +225,7 @@ public class TextProcessingController {
 
     }
 
-    public String importFile() throws FileNotFoundException {
+    public void importFile() throws FileNotFoundException {
         Stage primaryStage = StageManager.getPrimaryStage();
 
         FileChooser fileChooser = new FileChooser();
@@ -229,7 +235,6 @@ public class TextProcessingController {
 
         if (file == null) {
             new NotificationToast().showNotification(AlertType.INFORMATION, "No file selected", "Please select a valid file to import.");
-            return "";
         }
 
         StringBuilder content = new StringBuilder();
@@ -246,34 +251,44 @@ public class TextProcessingController {
 
         new NotificationToast().showNotification(AlertType.CONFIRMATION, "File import successful",
                 "The file was imported successfully");
-
-        return content.toString();
+        
+        text.setText(content.toString());
     }
 
     public void exportToFile() {
-        Stage primaryStage = StageManager.getPrimaryStage();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        fileChooser.setTitle("Save File");
+        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+        if(!textVal.isSuccess()) {
+            error_text.setText(textVal.getMessage());
+        }
+        else {
+            error_text.setText("");
 
+            Stage primaryStage = StageManager.getPrimaryStage();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+            fileChooser.setTitle("Save File");
+    
+    
+            File file = fileChooser.showSaveDialog(primaryStage);
+    
+    
+            if (file == null) {
+                new NotificationToast().showNotification(AlertType.ERROR, "No file selected", "Please select a valid location to save the file.");
+                return;
+            }
 
-        File file = fileChooser.showSaveDialog(primaryStage);
+            String textContent = text.getText();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(textContent);
+            } catch (IOException e) {
+                new NotificationToast().showNotification(AlertType.ERROR, "File save failed", "There was an issue saving the file: " + e.getMessage());
+                return;
+            }
 
-
-        if (file == null) {
-            new NotificationToast().showNotification(AlertType.ERROR, "No file selected", "Please select a valid location to save the file.");
-            return;
+            new NotificationToast().showNotification(AlertType.CONFIRMATION, "File saved successfully", "The file has been saved at " + file.getAbsolutePath());
         }
 
-        String textContent = "This is the text to be saved";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(textContent);
-        } catch (IOException e) {
-            new NotificationToast().showNotification(AlertType.ERROR, "File save failed", "There was an issue saving the file: " + e.getMessage());
-            return;
-        }
-
-        new NotificationToast().showNotification(AlertType.CONFIRMATION, "File saved successfully", "The file has been saved at " + file.getAbsolutePath());
+        
 
     }
 }
