@@ -22,3 +22,9 @@
 *.log
 *.tmp
 *.swp
+
+# Ignore Microsoft Office temp files
+~$*
+*.bak
+*.tmp
+*.swp
