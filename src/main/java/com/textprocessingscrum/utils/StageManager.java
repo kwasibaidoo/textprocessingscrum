@@ -1,7 +1,10 @@
 package com.textprocessingscrum.utils;
 
 import javafx.stage.Stage;
+import lombok.Generated;
 
+
+@Generated
 public class StageManager {
     private static Stage primaryStage;
 

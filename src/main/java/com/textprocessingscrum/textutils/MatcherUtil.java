@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MatcherUtil {
-    public static boolean match(String regex, String text, boolean isSelected) {
+    public boolean match(String regex, String text, boolean isSelected) {
         if(isSelected) {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(text);
