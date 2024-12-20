@@ -78,9 +78,12 @@ public class TextProcessingController {
     @FXML
     private Button import_button;
 
+    private Validator validator= new Validator();
+
     @FXML
     void addToCollection(MouseEvent event) {
-        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+
+        ValidationResult textVal = validator.validate(text.getText(), "not_null");
 
         if (!textVal.isSuccess()) {
             error_text.setText(textVal.getMessage());
@@ -115,8 +118,8 @@ public class TextProcessingController {
 
     @FXML
     void match(MouseEvent event) {
-        ValidationResult regexVal = Validator.validate(regex.getText(), "not_null", "regex");
-        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+        ValidationResult regexVal = validator.validate(regex.getText(), "not_null", "regex");
+        ValidationResult textVal = validator.validate(text.getText(), "not_null");
 
         if (!regexVal.isSuccess() || !textVal.isSuccess()) {
             error_regex.setText(regexVal.getMessage());
@@ -137,9 +140,9 @@ public class TextProcessingController {
 
     @FXML
     void replace(MouseEvent event) {
-        ValidationResult regexVal = Validator.validate(regex.getText(), "not_null", "regex");
-        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
-        ValidationResult queryVal = Validator.validate(text.getText(), "not_null");
+        ValidationResult regexVal = validator.validate(regex.getText(), "not_null", "regex");
+        ValidationResult textVal = validator.validate(text.getText(), "not_null");
+        ValidationResult queryVal = validator.validate(text.getText(), "not_null");
 
         if (!regexVal.isSuccess() || !textVal.isSuccess() || !queryVal.isSuccess()) {
             error_regex.setText(regexVal.getMessage());
@@ -182,8 +185,8 @@ public class TextProcessingController {
 
     @FXML
     void search(MouseEvent event) {
-        ValidationResult regexVal = Validator.validate(regex.getText(), "not_null", "regex");
-        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+        ValidationResult regexVal = validator.validate(regex.getText(), "not_null", "regex");
+        ValidationResult textVal = validator.validate(text.getText(), "not_null");
 
         if (!regexVal.isSuccess() || !textVal.isSuccess()) {
             error_regex.setText(regexVal.getMessage());
@@ -256,7 +259,7 @@ public class TextProcessingController {
     }
 
     public void exportToFile() {
-        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+        ValidationResult textVal = validator.validate(text.getText(), "not_null");
         if(!textVal.isSuccess()) {
             error_text.setText(textVal.getMessage());
         }

@@ -5,7 +5,7 @@ import java.util.regex.PatternSyntaxException;
 
 public class Validator {
 
-    public static ValidationResult validate(String input, String ...args) {
+    public ValidationResult validate(String input, String ...args) {
 
         for (String string : args) {
             if(string.equals("not_null")){
@@ -19,9 +19,6 @@ public class Validator {
                 } catch (PatternSyntaxException e) {
                     return new ValidationResult("Regex syntax error: " + e.getDescription(), false);
                 }
-            }
-            if(string.equals("unique")) {
-                
             }
         }
         return new ValidationResult();
