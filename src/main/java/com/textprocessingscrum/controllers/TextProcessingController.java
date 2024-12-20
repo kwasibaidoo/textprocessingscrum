@@ -1,27 +1,20 @@
 package com.textprocessingscrum.controllers;
 
-import java.io.IOException;
-import java.util.List;
-
-
 import com.textprocessingscrum.App;
 import com.textprocessingscrum.models.CollectionDAO;
 import com.textprocessingscrum.models.DataCollection;
 import com.textprocessingscrum.textutils.MatcherUtil;
 import com.textprocessingscrum.textutils.SearchUtil;
 import com.textprocessingscrum.utils.NotificationToast;
+import com.textprocessingscrum.utils.StageManager;
 import com.textprocessingscrum.utils.ValidationResult;
 import com.textprocessingscrum.utils.Validator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -29,7 +22,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.*;
+import java.util.List;
 
 public class TextProcessingController {
 
@@ -74,6 +71,12 @@ public class TextProcessingController {
 
     @FXML
     private TextFlow searchResult;
+
+    @FXML
+    private Button export_button;
+
+    @FXML
+    private Button import_button;
 
     @FXML
     void addToCollection(MouseEvent event) {
@@ -217,5 +220,75 @@ public class TextProcessingController {
                 searchResult.getChildren().add(new Text(remainingText));
             }
         }
+
+
+
+    }
+
+    public void importFile() throws FileNotFoundException {
+        Stage primaryStage = StageManager.getPrimaryStage();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+
+        File file = fileChooser.showOpenDialog(primaryStage);
+
+        if (file == null) {
+            new NotificationToast().showNotification(AlertType.INFORMATION, "No file selected", "Please select a valid file to import.");
+        }
+
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            new NotificationToast().showNotification(AlertType.ERROR, "File import failed",
+                    "File import was unsuccessful: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        new NotificationToast().showNotification(AlertType.CONFIRMATION, "File import successful",
+                "The file was imported successfully");
+        
+        text.setText(content.toString());
+    }
+
+    public void exportToFile() {
+        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+        if(!textVal.isSuccess()) {
+            error_text.setText(textVal.getMessage());
+        }
+        else {
+            error_text.setText("");
+
+            Stage primaryStage = StageManager.getPrimaryStage();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+            fileChooser.setTitle("Save File");
+    
+    
+            File file = fileChooser.showSaveDialog(primaryStage);
+    
+    
+            if (file == null) {
+                new NotificationToast().showNotification(AlertType.ERROR, "No file selected", "Please select a valid location to save the file.");
+                return;
+            }
+
+            String textContent = text.getText();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(textContent);
+            } catch (IOException e) {
+                new NotificationToast().showNotification(AlertType.ERROR, "File save failed", "There was an issue saving the file: " + e.getMessage());
+                return;
+            }
+
+            new NotificationToast().showNotification(AlertType.CONFIRMATION, "File saved successfully", "The file has been saved at " + file.getAbsolutePath());
+        }
+
+        
+
     }
 }
