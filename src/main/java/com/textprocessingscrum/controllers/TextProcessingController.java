@@ -32,6 +32,7 @@ public class TextProcessingController {
 
     private NotificationToast notificationToast = new NotificationToast();
     private CollectionDAO dao = CollectionDAO.getInstance();
+    private Validator validator = new Validator();
 
     @FXML
     private CheckBox case_sensitive;
@@ -78,11 +79,8 @@ public class TextProcessingController {
     @FXML
     private Button import_button;
 
-    private Validator validator= new Validator();
-
     @FXML
     void addToCollection(MouseEvent event) {
-
         ValidationResult textVal = validator.validate(text.getText(), "not_null");
 
         if (!textVal.isSuccess()) {
