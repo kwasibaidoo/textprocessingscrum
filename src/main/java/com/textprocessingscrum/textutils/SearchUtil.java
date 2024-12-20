@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class SearchUtil {
 
-    public List<List<Integer>> search(String regex, String text, boolean isSelected) {
+    public static List<List<Integer>> search(String regex, String text, boolean isSelected) {
         if(isSelected){
             List<List<Integer>> positions = new ArrayList<>();
             Pattern pattern = Pattern.compile(regex);
