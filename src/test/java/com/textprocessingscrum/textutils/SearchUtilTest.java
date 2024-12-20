@@ -23,8 +23,8 @@ public class SearchUtilTest {
         List<List<Integer>> positions = searchUtil.search("regex", "regex", true);
         assertFalse(positions.isEmpty(), "Positions list should not be empty");
         assertEquals(1, positions.size(), "There should be one match");
-        assertEquals(0, positions.getFirst().get(0).intValue(), "Start index should be 0");
-        assertEquals(5, positions.getFirst().get(1).intValue(), "End index should be 4");
+        assertEquals(0, positions.get(0).get(0).intValue(), "Start index should be 0");
+        assertEquals(5, positions.get(0).get(1).intValue(), "End index should be 4");
     }
 
     @Test
@@ -32,8 +32,8 @@ public class SearchUtilTest {
         List<List<Integer>> positions = searchUtil.search("regex", "regex", false);
         assertFalse(positions.isEmpty(), "Positions list should not be empty");
         assertEquals(1, positions.size(), "There should be one match");
-        assertEquals(0, positions.getFirst().get(0).intValue(), "Start index should be 0");
-        assertEquals(5, positions.getFirst().get(1).intValue(), "End index should be 4");
+        assertEquals(0, positions.get(0).get(0).intValue(), "Start index should be 0");
+        assertEquals(5, positions.get(0).get(1).intValue(), "End index should be 4");
     }
 
     @Test

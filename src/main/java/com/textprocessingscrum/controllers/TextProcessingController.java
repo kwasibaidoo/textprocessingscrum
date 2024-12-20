@@ -33,6 +33,7 @@ public class TextProcessingController {
     private NotificationToast notificationToast = new NotificationToast();
     private CollectionDAO dao = CollectionDAO.getInstance();
     private Validator validator = new Validator();
+    private SearchUtil searchUtil = new SearchUtil();
 
     @FXML
     private CheckBox case_sensitive;
@@ -151,7 +152,7 @@ public class TextProcessingController {
             error_text.setText("");
             error_query.setText("");
 
-            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText(), case_sensitive.isSelected());
+            List<List<Integer>> results = searchUtil.search(regex.getText(), text.getText(), case_sensitive.isSelected());
             searchResult.getChildren().clear();
             int lastEnd = 0;
             for (List<Integer> list : results) {
@@ -194,7 +195,7 @@ public class TextProcessingController {
             error_text.setText("");
             error_query.setText("");
 
-            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText(), case_sensitive.isSelected());
+            List<List<Integer>> results = searchUtil.search(regex.getText(), text.getText(), case_sensitive.isSelected());
             searchResult.getChildren().clear();
             int lastEnd = 0;
             for (List<Integer> list : results) {
