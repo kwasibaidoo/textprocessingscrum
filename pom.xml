@@ -11,6 +11,40 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.11.3</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.14.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.11.3</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.11.3</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.14.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>13</version>
@@ -28,12 +62,43 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- JaCoCo Plugin for Maven -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>  
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude App.java -->
+                        <exclude>**/com/lms/App.class</exclude>
+
+                        <!-- Exclude the entire com.lms.models package -->
+                        <exclude>**/com/lms/models/**</exclude>
+                        <exclude>**/com/lms/controllers/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>11</release>
+                    <release>21</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.34</version> <!-- Ensure this is the correct Lombok version -->
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
