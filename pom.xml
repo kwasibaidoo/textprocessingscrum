@@ -78,7 +78,7 @@
                 <configuration>
                     <excludes>
                         <!-- Exclude App.java -->
-                        <exclude>**/com/lms/App.class</exclude>
+                        <exclude>**/com/textprocessingscrum/App.class</exclude>
 
                         <!-- Exclude the entire com.lms.models package -->
                         <exclude>**/com/textprocessingscrum/models/**</exclude>

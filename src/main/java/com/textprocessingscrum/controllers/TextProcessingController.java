@@ -34,6 +34,7 @@ public class TextProcessingController {
     private CollectionDAO dao = CollectionDAO.getInstance();
     private Validator validator = new Validator();
     private SearchUtil searchUtil = new SearchUtil();
+    private MatcherUtil matcherUtil = new MatcherUtil();
 
     @FXML
     private CheckBox case_sensitive;
@@ -128,7 +129,7 @@ public class TextProcessingController {
             error_text.setText("");
             error_query.setText("");
 
-            boolean success = MatcherUtil.match(regex.getText(), text.getText(), case_sensitive.isSelected());
+            boolean success = matcherUtil.match(regex.getText(), text.getText(), case_sensitive.isSelected());
             if (success) {
                 notificationToast.showNotification(AlertType.CONFIRMATION, "Match Found", "There is a match for the string '" + text.getText() + "'");
             } else {
