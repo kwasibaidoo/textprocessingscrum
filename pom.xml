@@ -81,8 +81,8 @@
                         <exclude>**/com/lms/App.class</exclude>
 
                         <!-- Exclude the entire com.lms.models package -->
-                        <exclude>**/com/lms/models/**</exclude>
-                        <exclude>**/com/lms/controllers/**</exclude>
+                        <exclude>**/com/textprocessingscrum/models/**</exclude>
+                        <exclude>**/com/textprocessingscrum/controllers/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
